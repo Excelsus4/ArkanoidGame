@@ -1,21 +1,18 @@
 #include "stdafx.h"
 #include "./Systems/Device.h"
 #include "./Scenes/Scene.h"
-#include "./Viewer/Freedom.h"
 
 #include "./Scenes/Stage1.h"
-#include "./Scenes/Stage2.h"
 
 SceneValues* values;
 vector<Scene*> scenes;
 
 void InitScene() {
 	values = new SceneValues();
-	values->MainCamera = new Freedom();
+	values->MainCamera = new Camera();
 	D3DXMatrixIdentity(&values->Projection);
 
 	scenes.push_back(new Stage1(values));
-	//scenes.push_back(new Stage2(values));
 }
 
 void DestroyScene(){
@@ -28,7 +25,7 @@ void DestroyScene(){
 
 void Update() {
 	values->MainCamera->Update();
-	D3DXMatrixOrthoOffCenterLH(&values->Projection, 0, (float)Width, 0, (float)Height, -10, 10);
+	D3DXMatrixOrthoOffCenterLH(&values->Projection, 0, (float)Width/3, 0, (float)Height/3, -10, 10);
 
 	for (auto scene : scenes)
 		scene->Update();

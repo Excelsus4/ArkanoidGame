@@ -14,8 +14,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	return 0;
 }
 
-UINT Width = 800;
-UINT Height = 600;
+UINT Width = 224*3;
+UINT Height = 256*3;
 
 HWND Hwnd = NULL;
 wstring Title = L"Draw Sprite";

@@ -144,6 +144,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Arkanoid\Ball.cpp" />
+    <ClCompile Include="Arkanoid\Blocks.cpp" />
+    <ClCompile Include="Arkanoid\PowerUps.cpp" />
+    <ClCompile Include="Arkanoid\Vaus.cpp" />
     <ClCompile Include="Objects\Background.cpp" />
     <ClCompile Include="Objects\Bullet.cpp" />
     <ClCompile Include="Objects\Fire.cpp" />
@@ -155,7 +159,6 @@
     <ClCompile Include="Renders\Sprite.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="Scenes\Stage1.cpp" />
-    <ClCompile Include="Scenes\Stage2.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
@@ -173,6 +176,11 @@
     <None Include="Utilities\Xml.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Arkanoid\Ball.h" />
+    <ClInclude Include="Arkanoid\Blocks.h" />
+    <ClInclude Include="Arkanoid\IArkanoidPhysics.h" />
+    <ClInclude Include="Arkanoid\PowerUps.h" />
+    <ClInclude Include="Arkanoid\Vaus.h" />
     <ClInclude Include="Objects\Background.h" />
     <ClInclude Include="Objects\Bullet.h" />
     <ClInclude Include="Objects\Fire.h" />
@@ -184,7 +192,6 @@
     <ClInclude Include="Renders\Sprite.h" />
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="Scenes\Stage1.h" />
-    <ClInclude Include="Scenes\Stage2.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Systems\Device.h" />
     <ClInclude Include="Systems\DirectWrite.h" />

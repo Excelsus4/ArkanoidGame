@@ -1,5 +1,7 @@
 #pragma once
 #include "Scene.h"
+#include "Arkanoid/IArkanoidPhysics.h"
+#include "Arkanoid/Vaus.h"
 
 class Stage1 : public Scene {
 public:
@@ -10,12 +12,6 @@ public:
 	virtual void Render() override;
 
 private:
-	void RenderBackground();
-
-private:
-	Sprite* backgrounds[3];
-
-	class Player* player;
-	class Bullet* bullet;
-	class Fire* fire;
+	World world;
+	Sprite background;
 };
