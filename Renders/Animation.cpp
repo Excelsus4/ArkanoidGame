@@ -27,6 +27,11 @@ void Animation::Play(UINT clipNumber)
 		clips[currentClip]->Stop();
 
 	currentClip = clipNumber;
+
+	clips[currentClip]->Position(position);
+	clips[currentClip]->Scale(scale);
+	clips[currentClip]->Rotation(rotation);
+
 	clips[currentClip]->Play();
 }
 

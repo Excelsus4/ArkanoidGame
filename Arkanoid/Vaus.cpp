@@ -44,7 +44,7 @@ void Vaus::Translate(D3DXVECTOR2 Translation)
 {
 	D3DXVECTOR2 pos = Position() + Translation;
 	pos.x = Math::Clamp(
-		pos.x, 8 + animation->TextureSize().x / 2, 
-		216 - animation->TextureSize().x / 2);
+		pos.x, 8 + HalfSize().x, 
+		216 - HalfSize().x);
 	Position(pos);
 }

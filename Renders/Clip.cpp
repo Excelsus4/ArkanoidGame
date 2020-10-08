@@ -188,5 +188,9 @@ void Clip::DrawBound(bool val)
 
 Sprite * Clip::GetSprite()
 {
+	frames[currentFrame]->Image->Position(position);
+	frames[currentFrame]->Image->Scale(scale);
+	frames[currentFrame]->Image->Rotation(rotation);
+
 	return frames[currentFrame]->Image;
 }

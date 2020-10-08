@@ -32,7 +32,7 @@ void Update() {
 }
 
 void Render() {
-	D3DXCOLOR bgColor = D3DXCOLOR(0.1f, 0.1f, 0.1f, 1);
+	D3DXCOLOR bgColor = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1);
 	DeviceContext->ClearRenderTargetView(RTV, (float*)bgColor);
 	{
 		// ImGui::LabelText("FPS", "%.0f", ImGui::GetIO().Framerate);

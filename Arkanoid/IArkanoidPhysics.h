@@ -3,8 +3,8 @@
 
 struct World {
 	/*vector<IArkanoidPhysics*> blocks;
-	vector<IArkanoidPhysics*> balls;
 	vector<IArkanoidPhysics*> powerups;*/
+	vector<void*> balls;
 	void* vaus;
 };
 
@@ -29,6 +29,9 @@ public:
 	virtual void Scale(D3DXVECTOR2 vec) { animation->Scale(vec); }
 
 	//Arkanoid Objects never rotates.
+
+	virtual D3DXVECTOR2 Size() const { return animation->TextureSize(); }
+	virtual D3DXVECTOR2 HalfSize() const { return animation->TextureSize()*0.5f; }
 protected:
 	World* world;
 	Animation* animation;
