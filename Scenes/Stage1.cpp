@@ -13,6 +13,22 @@ Stage1::Stage1(SceneValues * values) :
 	Ball* ball = new Ball(&world);
 	world.balls.push_back(ball);
 	world.vaus = new Vaus(&world, ball);
+
+	Blocks::BlockType type[6];
+	type[0] = Blocks::BlockType::Green;
+	type[1] = Blocks::BlockType::Magenta;
+	type[2] = Blocks::BlockType::Blue;
+	type[3] = Blocks::BlockType::Yellow;
+	type[4] = Blocks::BlockType::Red;
+	type[5] = Blocks::BlockType::Iron;
+
+	for (int j = 0; j < 6; j++) {
+		for (int i = 0; i < 13; i++) {
+			Blocks* b = new Blocks(&world, type[j], 0);
+			b->Position(16 * (i + 1), j * 8 + 156);
+			world.blocks.push_back(b);
+		}
+	}
 }
 
 Stage1::~Stage1()
@@ -23,6 +39,8 @@ Stage1::~Stage1()
 	SAFE_DELETE(world.vaus);
 	for (auto ball : world.balls)
 		SAFE_DELETE(ball);
+	for (auto block : world.blocks)
+		SAFE_DELETE(block);
 }
 
 void Stage1::Update()
@@ -33,6 +51,8 @@ void Stage1::Update()
 	((Vaus*)world.vaus)->PhysicsUpdate();
 	for (auto ball : world.balls)
 		((Ball*)ball)->PhysicsUpdate();
+	for (auto block : world.blocks)
+		((Blocks*)block)->PhysicsUpdate();
 	
 	//=========================================================================
 	// Update
@@ -43,6 +63,8 @@ void Stage1::Update()
 	background.Update(V, P);
 	for (auto ball : world.balls)
 		((Ball*)ball)->Update(V, P);
+	for (auto block : world.blocks)
+		((Blocks*)block)->Update(V, P);
 	((Vaus*)world.vaus)->Update(V, P);
 }
 
@@ -54,5 +76,7 @@ void Stage1::Render()
 	background.Render();
 	for (auto ball : world.balls)
 		((Ball*)ball)->Render();
+	for (auto block : world.blocks)
+		((Blocks*)block)->Render();
 	((Vaus*)world.vaus)->Render();
 }

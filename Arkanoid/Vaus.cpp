@@ -54,7 +54,7 @@ void Vaus::PowerUp(PowerUps * capsule)
 void Vaus::Detach()
 {
 	for (auto bb : boundBalls) {
-		//TODO: assign directions according to the offset
+		// assign directions according to the offset
 		// Normalize offset, multiply it with speed and release
 		D3DXVECTOR2 direction = bb->offset + D3DXVECTOR2(0, 8);
 		D3DXVec2Normalize(&direction, &direction);

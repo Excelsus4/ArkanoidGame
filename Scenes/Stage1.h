@@ -3,6 +3,7 @@
 #include "Arkanoid/IArkanoidPhysics.h"
 #include "Arkanoid/Vaus.h"
 #include "Arkanoid/Ball.h"
+#include "Arkanoid/Blocks.h"
 
 class Stage1 : public Scene {
 public:

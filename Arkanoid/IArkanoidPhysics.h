@@ -2,8 +2,8 @@
 #include "stdafx.h"
 
 struct World {
-	/*vector<IArkanoidPhysics*> blocks;
-	vector<IArkanoidPhysics*> powerups;*/
+	/*vector<IArkanoidPhysics*> powerups;*/
+	vector<void*> blocks;
 	vector<void*> balls;
 	void* vaus;
 };
