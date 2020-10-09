@@ -10,8 +10,9 @@ Stage1::Stage1(SceneValues * values) :
 	// Initialization
 	//=========================================================================
 	background.Position(112, 120);
-	world.vaus = new Vaus(&world);
-	world.balls.push_back(new Ball(&world));
+	Ball* ball = new Ball(&world);
+	world.balls.push_back(ball);
+	world.vaus = new Vaus(&world, ball);
 }
 
 Stage1::~Stage1()

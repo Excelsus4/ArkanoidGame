@@ -32,6 +32,10 @@ public:
 
 	virtual D3DXVECTOR2 Size() const { return animation->TextureSize(); }
 	virtual D3DXVECTOR2 HalfSize() const { return animation->TextureSize()*0.5f; }
+
+	// These two method only used by ball and vaus relation
+	virtual void TryAttaching(IArkanoidPhysics* ball) {};
+	virtual void SetVelocity(D3DXVECTOR2 vec) {};
 protected:
 	World* world;
 	Animation* animation;

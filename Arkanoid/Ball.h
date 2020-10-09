@@ -19,10 +19,11 @@ public:
 	virtual void Scale(D3DXVECTOR2 vec) { shadow->Scale(vec); __super::Scale(vec); }
 
 	void Reflect(D3DXVECTOR2 normal);
-	void SetVelocity(D3DXVECTOR2 vec);
+	virtual void SetVelocity(D3DXVECTOR2 vec) override;
 private:
 	Sprite* shadow;
 	D3DXVECTOR2 shadowOffset;
 	D3DXVECTOR2 velocity;
 	float multiplier;
+	bool isCaught;
 };
