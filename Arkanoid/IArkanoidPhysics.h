@@ -36,6 +36,7 @@ public:
 	// These two method only used by ball and vaus relation
 	virtual void TryAttaching(IArkanoidPhysics* ball) {};
 	virtual void SetVelocity(D3DXVECTOR2 vec) {};
+	virtual void Reflect(D3DXVECTOR2 normal) {};
 protected:
 	World* world;
 	Animation* animation;

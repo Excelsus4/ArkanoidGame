@@ -60,6 +60,11 @@ void Ball::PhysicsUpdate()
 		}
 
 		//=========================================================================
+		// Apply
+		//=========================================================================
+		Position(pos);
+
+		//=========================================================================
 		// Vaus
 		//=========================================================================
 		if (velocity.y < 0) {
@@ -71,9 +76,14 @@ void Ball::PhysicsUpdate()
 		}
 
 		//=========================================================================
-		// Finalize
+		// Blocks
 		//=========================================================================
-		Position(pos);
+		for (auto b : world->blocks) {
+			if (CheckCollision((IArkanoidPhysics*)b)) {
+				((IArkanoidPhysics*)b)->TryAttaching(this);
+				break;
+			}
+		}
 	}
 }
 
@@ -92,9 +102,13 @@ void Ball::Render()
 void Ball::Reflect(D3DXVECTOR2 normal)
 {
 	velocity = velocity - 2 * D3DXVec2Dot(&velocity, &normal) * normal;
-	multiplier += 0.02f;
+	multiplier += 0.01f;
 	if (multiplier > 3)
 		multiplier = 3;
+
+	D3DXVECTOR2 pos = Position();
+	pos += normal * Timer->Elapsed() * multiplier * 200;
+	Position(pos);
 }
 
 void Ball::SetVelocity(D3DXVECTOR2 vec)

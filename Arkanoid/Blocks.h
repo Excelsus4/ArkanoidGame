@@ -11,6 +11,16 @@ public:
 	virtual ~Blocks();
 
 	virtual void PhysicsUpdate() override;
+	virtual void TryAttaching(IArkanoidPhysics* ball) override;
+
+	int Health() const { return health; }
+private:
+	enum class Relation {
+		NW=0, N, NE,
+		W, C, E,
+		SW, S, SE
+	};
+	Relation GetRelation(D3DXVECTOR4& block, D3DXVECTOR2& bCenter);
 private:
 	Sprite* GenerateBlockSprite(int x, int y);
 private:

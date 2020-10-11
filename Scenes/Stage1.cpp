@@ -53,6 +53,17 @@ void Stage1::Update()
 		((Ball*)ball)->PhysicsUpdate();
 	for (auto block : world.blocks)
 		((Blocks*)block)->PhysicsUpdate();
+
+	// Trash check blocks and generate powerup
+	for (auto iter = world.blocks.begin(); iter != world.blocks.end();) {
+		if (((Blocks*)(*iter))->Health() <= 0) {
+			//TODO: Try to make random powerup here
+			delete ((Blocks*)(*iter));
+			iter = world.blocks.erase(iter);
+		}else{
+			++iter;
+		}
+	}
 	
 	//=========================================================================
 	// Update

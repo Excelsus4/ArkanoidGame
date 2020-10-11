@@ -18,7 +18,7 @@ public:
 	virtual void Scale(float x, float y) { Scale(D3DXVECTOR2(x, y)); }
 	virtual void Scale(D3DXVECTOR2 vec) { shadow->Scale(vec); __super::Scale(vec); }
 
-	void Reflect(D3DXVECTOR2 normal);
+	virtual void Reflect(D3DXVECTOR2 normal) override;
 	virtual void SetVelocity(D3DXVECTOR2 vec) override;
 private:
 	Sprite* shadow;
