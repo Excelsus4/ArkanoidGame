@@ -29,6 +29,10 @@ Stage1::Stage1(SceneValues * values) :
 			world.blocks.push_back(b);
 		}
 	}
+
+	for (int i = 0; i < 14; i++) {
+		pool.push_back(new PowerUps(&world, (PowerUps::Type)(i / 2 + 1)));
+	}
 }
 
 Stage1::~Stage1()
@@ -38,9 +42,13 @@ Stage1::~Stage1()
 	//=========================================================================
 	SAFE_DELETE(world.vaus);
 	for (auto ball : world.balls)
-		SAFE_DELETE(ball);
+		delete (Ball*)ball;
 	for (auto block : world.blocks)
-		SAFE_DELETE(block);
+		delete (Blocks*)block;
+	for (auto pu : world.powerups)
+		delete (PowerUps*)pu;
+	for (auto pu : pool)
+		delete pu;
 }
 
 void Stage1::Update()
@@ -53,18 +61,41 @@ void Stage1::Update()
 		((Ball*)ball)->PhysicsUpdate();
 	for (auto block : world.blocks)
 		((Blocks*)block)->PhysicsUpdate();
+	for (auto pu : world.powerups)
+		((PowerUps*)pu)->PhysicsUpdate();
 
 	// Trash check blocks and generate powerup
 	for (auto iter = world.blocks.begin(); iter != world.blocks.end();) {
 		if (((Blocks*)(*iter))->Health() <= 0) {
-			//TODO: Try to make random powerup here
+			// Try to make random powerup here
+			if (Math::Random(0, 1) < 0.1f) {
+				int selection = Math::Random(0, pool.size()-1);
+				PowerUps* drops = pool[selection];
+				pool.erase(pool.begin() + selection);
+				drops->recycleFlag = false;
+				drops->Position(((Blocks*)(*iter))->Position());
+				world.powerups.push_back(drops);
+			}
+			
 			delete ((Blocks*)(*iter));
 			iter = world.blocks.erase(iter);
-		}else{
+		}
+		else {
 			++iter;
 		}
 	}
-	
+
+	// Trash check Powerup and recycle
+	for (auto iter = world.powerups.begin(); iter != world.powerups.end();) {
+		if (((PowerUps*)(*iter))->recycleFlag) {
+			pool.push_back(((PowerUps*)(*iter)));
+			iter = world.powerups.erase(iter);
+		}
+		else {
+			++iter;
+		}
+	}
+
 	//=========================================================================
 	// Update
 	//=========================================================================
@@ -77,6 +108,8 @@ void Stage1::Update()
 	for (auto block : world.blocks)
 		((Blocks*)block)->Update(V, P);
 	((Vaus*)world.vaus)->Update(V, P);
+	for (auto pu : world.powerups)
+		((PowerUps*)pu)->Update(V, P);
 }
 
 void Stage1::Render()
@@ -90,4 +123,7 @@ void Stage1::Render()
 	for (auto block : world.blocks)
 		((Blocks*)block)->Render();
 	((Vaus*)world.vaus)->Render();
+	for (auto pu : world.powerups)
+		((PowerUps*)pu)->Render();
+
 }

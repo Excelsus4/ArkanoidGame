@@ -2,9 +2,9 @@
 #include "stdafx.h"
 
 struct World {
-	/*vector<IArkanoidPhysics*> powerups;*/
 	vector<void*> blocks;
 	vector<void*> balls;
+	vector<void*> powerups;
 	void* vaus;
 };
 
@@ -37,6 +37,7 @@ public:
 	virtual void TryAttaching(IArkanoidPhysics* ball) {};
 	virtual void SetVelocity(D3DXVECTOR2 vec) {};
 	virtual void Reflect(D3DXVECTOR2 normal) {};
+	virtual void Feed(int type) {};
 protected:
 	World* world;
 	Animation* animation;

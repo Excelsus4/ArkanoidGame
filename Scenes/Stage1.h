@@ -15,5 +15,6 @@ public:
 
 private:
 	World world;
+	vector<PowerUps*> pool;
 	Sprite background;
 };

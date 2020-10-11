@@ -46,11 +46,6 @@ void Vaus::PhysicsUpdate()
 		Detach();
 }
 
-void Vaus::PowerUp(PowerUps * capsule)
-{
-
-}
-
 void Vaus::Detach()
 {
 	for (auto bb : boundBalls) {
@@ -90,4 +85,8 @@ void Vaus::TryAttaching(IArkanoidPhysics * ball)
 	if (true) {
 		Detach();
 	}
+}
+
+void Vaus::Feed(int type)
+{
 }
