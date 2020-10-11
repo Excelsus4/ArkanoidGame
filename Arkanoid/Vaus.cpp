@@ -9,9 +9,30 @@ Vaus::Vaus(World * world, IArkanoidPhysics* startingBall):
 	wstring shaderFile = Shaders + L"009_Sprite.fx";
 
 	{
+		//Default Vaus
 		Clip* clip = new Clip(PlayMode::Loop);
 		for (int i = 0; i < 6; ++i) {
 			clip->AddFrame(new Sprite(spriteFile, shaderFile, 32, i * 8, 64, (i + 1) * 8), 0.2f);
+		}
+		animation->AddClip(clip);
+	}
+
+	{
+		//Long Vaus
+		Clip* clip = new Clip(PlayMode::Loop);
+		for (int i = 0; i < 6; ++i) {
+			//64 0, 48 , 8
+			clip->AddFrame(new Sprite(spriteFile, shaderFile, 64, i * 8, 112, (i + 1) * 8), 0.2f);
+		}
+		animation->AddClip(clip);
+	}
+
+	{
+		//Laser Vaus
+		Clip* clip = new Clip(PlayMode::Loop);
+		for (int i = 0; i < 6; ++i) {
+			//144 0, 32 , 8
+			clip->AddFrame(new Sprite(spriteFile, shaderFile, 144, i * 8, 176, (i + 1) * 8), 0.2f);
 		}
 		animation->AddClip(clip);
 	}
@@ -42,8 +63,12 @@ void Vaus::PhysicsUpdate()
 	else if (Key->Press(VK_RIGHT))
 		Translate(D3DXVECTOR2(1, 0)*speed*Timer->Elapsed());
 
-	if (Key->Down(VK_SPACE))
+	if (Key->Down(VK_SPACE)) {
 		Detach();
+		if (currentState == PowerUps::Lasers) {
+			//TODO: SHOOT!!!!
+		}
+	}
 }
 
 void Vaus::Detach()
@@ -81,12 +106,51 @@ void Vaus::TryAttaching(IArkanoidPhysics * ball)
 	bb->offset = ball->Position() - Position();
 	boundBalls.push_back(bb);
 
-	//TODO: if catch is false, then instance release
-	if (true) {
+	// if catch is false, then instance release
+	if (currentState != PowerUps::Catch) {
 		Detach();
 	}
 }
 
 void Vaus::Feed(int type)
 {
+	PowerUps::Type t = (PowerUps::Type)type;
+	switch (t)
+	{
+	case PowerUps::Paddle:
+		//Extra Life... Do nothing for now
+		animation->Play(0);
+		break;
+	case PowerUps::Lasers:
+		// Implement Laser shooting...
+		animation->Play(2);
+		break;
+	case PowerUps::Enlarge:
+		// replace the sprite...
+		animation->Play(1);
+		break;
+	case PowerUps::Catch:
+		// enable the catch flag... ? just use the recent status...
+		animation->Play(0);
+		break;
+	case PowerUps::Slow:
+		// Reset ball speed multiplier
+		for (auto b : world->balls) {
+			((IArkanoidPhysics*)b)->Feed(1);
+		}
+		animation->Play(0);
+		break;
+	case PowerUps::Break:
+		//Exit... Do nothing for now
+		animation->Play(0);
+		break;
+	case PowerUps::Disruption:
+		// Split the ball
+		for (auto b : world->balls) {
+			((IArkanoidPhysics*)b)->Feed(3);
+		}
+		animation->Play(0);
+		break;
+	}
+	currentState = t;
 }

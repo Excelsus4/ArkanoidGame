@@ -119,3 +119,13 @@ void Ball::SetVelocity(D3DXVECTOR2 vec)
 	else
 		isCaught = false;
 }
+
+void Ball::Feed(int type)
+{
+	if (type == 1) {
+		multiplier = 1;
+	}
+	else if (type == 3) {
+		//TODO: implement disruption...
+	}
+}

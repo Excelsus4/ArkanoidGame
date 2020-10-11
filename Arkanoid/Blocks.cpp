@@ -60,7 +60,7 @@ void Blocks::TryAttaching(IArkanoidPhysics * ball)
 	animation->GetClip()->Play(0);
 	--(this->health);
 
-	//TODO: make ball bounce back by giving it a normal vector
+	// make ball bounce back by giving it a normal vector
 	D3DXVECTOR4 blockR;
 	blockR.w = Position().x - HalfSize().x;
 	blockR.x = Position().x + HalfSize().x;

@@ -66,3 +66,4 @@ void PowerUps::PhysicsUpdate()
 		recycleFlag = true;
 	}
 }
+

@@ -68,15 +68,17 @@ void Stage1::Update()
 	for (auto iter = world.blocks.begin(); iter != world.blocks.end();) {
 		if (((Blocks*)(*iter))->Health() <= 0) {
 			// Try to make random powerup here
-			if (Math::Random(0, 1) < 0.1f) {
-				int selection = Math::Random(0, pool.size()-1);
-				PowerUps* drops = pool[selection];
-				pool.erase(pool.begin() + selection);
-				drops->recycleFlag = false;
-				drops->Position(((Blocks*)(*iter))->Position());
-				world.powerups.push_back(drops);
+			if (world.balls.size() <= 1) {
+				if (Math::Random(0, 1) < 0.1f) {
+					int selection = Math::Random(0, pool.size() - 1);
+					PowerUps* drops = pool[selection];
+					pool.erase(pool.begin() + selection);
+					drops->recycleFlag = false;
+					drops->Position(((Blocks*)(*iter))->Position());
+					world.powerups.push_back(drops);
+				}
 			}
-			
+
 			delete ((Blocks*)(*iter));
 			iter = world.blocks.erase(iter);
 		}

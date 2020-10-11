@@ -7,16 +7,6 @@ class Vaus : public IArkanoidPhysics {
 		IArkanoidPhysics* ball;
 		D3DXVECTOR2 offset;
 	};
-
-	enum Type {
-		Paddle = 1,
-		Lasers,
-		Enlarge,
-		Catch,
-		Slow,
-		Break,
-		Disruption
-	};
 public:
 	Vaus(World* world, IArkanoidPhysics* startingBall);
 	virtual ~Vaus();
@@ -28,7 +18,7 @@ private:
 	void Translate(D3DXVECTOR2 Translation);
 	void Detach();
 private:
-	Type currentState;
+	PowerUps::Type currentState;
 	vector<boundBall*> boundBalls;
 	float speed;
 };

@@ -20,6 +20,7 @@ public:
 
 	virtual void Reflect(D3DXVECTOR2 normal) override;
 	virtual void SetVelocity(D3DXVECTOR2 vec) override;
+	virtual void Feed(int type) override;
 private:
 	Sprite* shadow;
 	D3DXVECTOR2 shadowOffset;
