@@ -146,9 +146,7 @@ void Vaus::Feed(int type)
 		break;
 	case PowerUps::Disruption:
 		// Split the ball
-		for (auto b : world->balls) {
-			((IArkanoidPhysics*)b)->Feed(3);
-		}
+		((IArkanoidPhysics*)world->balls[0])->Feed(3);
 		animation->Play(0);
 		break;
 	}

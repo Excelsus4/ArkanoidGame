@@ -23,6 +23,34 @@ Ball::Ball(World * world):
 	animation->DrawBound(true);
 }
 
+Ball::Ball(const Ball & src, float degree):
+	IArkanoidPhysics(src.world), isCaught(src.isCaught), multiplier(src.multiplier)
+{
+	animation = new Animation;
+	wstring spriteFile = Textures + L"Arkanoid/Vaus.png";
+	wstring shaderFile = Shaders + L"009_Sprite.fx";
+
+	{
+		Clip* clip = new Clip(PlayMode::End);
+		clip->AddFrame(new Sprite(spriteFile, shaderFile, 0, 40, 5, 44), 0.2f);
+		animation->AddClip(clip);
+	}
+
+	shadowOffset = D3DXVECTOR2(4, -4);
+	shadow = new Sprite(spriteFile, shaderFile, 4, 44, 9, 48);
+
+	Position(src.Position());
+	Scale(1, 1);
+	animation->Play(0);
+	animation->DrawBound(true);
+
+	float theta = Math::ToRadian(degree);
+	float cs = cosf(theta);
+	float sn = sinf(theta);
+	velocity.x = src.velocity.x * cs - src.velocity.y*sn;
+	velocity.y = src.velocity.x * sn + src.velocity.y*cs;
+}
+
 Ball::~Ball()
 {
 	SAFE_DELETE(animation);
@@ -44,10 +72,6 @@ void Ball::PhysicsUpdate()
 		if (pos.y > 232 - HalfSize().y) {
 			Reflect(D3DXVECTOR2(0, -1));
 			pos.y = 232 - HalfSize().y;
-		}
-		else if (pos.y < 0 + HalfSize().y) {
-			Reflect(D3DXVECTOR2(0, 1));
-			pos.y = 0 + HalfSize().y;
 		}
 
 		if (pos.x < 8 + HalfSize().x) {
@@ -126,6 +150,13 @@ void Ball::Feed(int type)
 		multiplier = 1;
 	}
 	else if (type == 3) {
-		//TODO: implement disruption...
+		//implement disruption...
+		// Balls split like shotgun...
+		// 25degree?
+		Ball* ball = new Ball(*this, 10);
+		Ball* ball2 = new Ball(*this, -10);
+
+		world->balls.push_back(ball);
+		world->balls.push_back(ball2);
 	}
 }

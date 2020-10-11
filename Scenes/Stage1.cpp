@@ -98,6 +98,21 @@ void Stage1::Update()
 		}
 	}
 
+	// Find Ball and trash
+	for (auto iter = world.balls.begin(); iter != world.balls.end();) {
+		if (((Ball*)(*iter))->Position().y + ((Ball*)(*iter))->HalfSize().y < 0) {
+			delete ((Ball*)(*iter));
+			iter = world.balls.erase(iter);
+		}
+		else {
+			++iter;
+		}
+	}
+
+	//TODO: Check winning and losing condition...
+	// Winning: if blocks are all gone
+	// Losing : if balls are all gone
+
 	//=========================================================================
 	// Update
 	//=========================================================================

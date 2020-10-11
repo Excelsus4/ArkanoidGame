@@ -4,6 +4,7 @@
 class Ball : public IArkanoidPhysics{
 public:
 	Ball(World* world);
+	Ball(const Ball& src, float degree);
 	virtual ~Ball();
 
 	virtual void PhysicsUpdate() override;
