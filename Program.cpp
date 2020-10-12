@@ -40,31 +40,6 @@ void Render() {
 			scene->Render();
 	}
 	ImGui::Render();
-
-	DirectWrite::GetDC()->BeginDraw();
-	{
-		wstring text = L"";
-
-		RECT rect;
-		rect.left = 20;
-		rect.top = 0;
-		rect.right = 600;
-		rect.bottom = 20;
-
-		text = L"Frame Per Second : " + to_wstring((int)ImGui::GetIO().Framerate);
-		DirectWrite::RenderText(text, rect);
-
-		rect.top += 20;
-		rect.bottom += 20;
-
-		text = L"Camera Position : ";
-		text += to_wstring((int)values->MainCamera->Position().x);
-		text += L", ";
-		text += to_wstring((int)values->MainCamera->Position().y);
-		DirectWrite::RenderText(text, rect);
-	}
-
-	DirectWrite::GetDC()->EndDraw();
 	SwapChain->Present(0, 0);
 }
 

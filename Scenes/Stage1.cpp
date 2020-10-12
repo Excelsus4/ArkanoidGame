@@ -110,8 +110,17 @@ void Stage1::Update()
 	}
 
 	//TODO: Check winning and losing condition...
-	// Winning: if blocks are all gone
-	// Losing : if balls are all gone
+	// Winning: if blocks are all gone -> End the game
+	// Losing : if balls are all gone -> Reduce the life by one, and recreate a bound ball.if no life is left, end the game.
+	if (world.balls.size() <= 0) {
+		if (!((Vaus*)world.vaus)->CreateBall()) {
+			//TODO: Lose the game...
+		}
+	}
+
+	if (world.blocks.size() <= 0) {
+		//TODO: win the game...
+	}
 
 	//=========================================================================
 	// Update
@@ -142,5 +151,27 @@ void Stage1::Render()
 	((Vaus*)world.vaus)->Render();
 	for (auto pu : world.powerups)
 		((PowerUps*)pu)->Render();
+
+	DirectWrite::GetDC()->BeginDraw();
+	{
+		wstring text = L"";
+
+		RECT rect;
+		rect.left = 20;
+		rect.top = 0;
+		rect.right = 600;
+		rect.bottom = 20;
+
+		text = L"Frame Per Second : " + to_wstring((int)ImGui::GetIO().Framerate);
+		DirectWrite::RenderText(text, rect);
+
+		rect.top += 20;
+		rect.bottom += 20;
+
+		text = L"Life : ";
+		text += to_wstring(*world.life);
+		DirectWrite::RenderText(text, rect);
+	}
+	DirectWrite::GetDC()->EndDraw();
 
 }

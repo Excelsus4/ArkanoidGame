@@ -1,6 +1,7 @@
 #pragma once
 #include "IArkanoidPhysics.h"
 #include "PowerUps.h"
+#include "Ball.h"
 
 class Vaus : public IArkanoidPhysics {
 	struct boundBall {
@@ -14,6 +15,8 @@ public:
 	virtual void PhysicsUpdate() override;
 	virtual void TryAttaching(IArkanoidPhysics* ball) override;
 	virtual void Feed(int type) override;
+
+	bool CreateBall();
 private:
 	void Translate(D3DXVECTOR2 Translation);
 	void Detach();
@@ -21,4 +24,6 @@ private:
 	PowerUps::Type currentState;
 	vector<boundBall*> boundBalls;
 	float speed;
+
+	int life;
 };

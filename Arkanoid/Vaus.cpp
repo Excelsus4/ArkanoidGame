@@ -2,7 +2,7 @@
 #include "Vaus.h"
 
 Vaus::Vaus(World * world, IArkanoidPhysics* startingBall):
-	IArkanoidPhysics(world), speed(200)
+	IArkanoidPhysics(world), speed(200), life(3)
 {
 	animation = new Animation;
 	wstring spriteFile = Textures + L"Arkanoid/Vaus.png";
@@ -47,6 +47,8 @@ Vaus::Vaus(World * world, IArkanoidPhysics* startingBall):
 	bb->ball = startingBall;
 	bb->offset = startingBall->Position() - Position();
 	boundBalls.push_back(bb);
+
+	world->life = &life;
 }
 
 Vaus::~Vaus()
@@ -118,7 +120,8 @@ void Vaus::Feed(int type)
 	switch (t)
 	{
 	case PowerUps::Paddle:
-		//Extra Life... Do nothing for now
+		//Extra Life...
+		++life;
 		animation->Play(0);
 		break;
 	case PowerUps::Lasers:
@@ -126,7 +129,8 @@ void Vaus::Feed(int type)
 		animation->Play(2);
 		break;
 	case PowerUps::Enlarge:
-		// replace the sprite...
+		// replace the sprite... and thats enough.
+		// maybe clamp the position?
 		animation->Play(1);
 		break;
 	case PowerUps::Catch:
@@ -151,4 +155,24 @@ void Vaus::Feed(int type)
 		break;
 	}
 	currentState = t;
+}
+
+bool Vaus::CreateBall()
+{
+	//Use life to create a bound ball and return true
+	//if life is not enough, then return false
+	if (life > 0) {
+		--life;
+		Position(112, 20);
+		Ball* ball = new Ball(world);
+		world->balls.push_back(ball);
+		ball->SetVelocity(D3DXVECTOR2(0, 0));
+		boundBall* bb = new boundBall;
+		bb->ball = ball;
+		bb->offset = ball->Position() - Position();
+		boundBalls.push_back(bb);
+
+		return true;
+	}
+	return false;
 }

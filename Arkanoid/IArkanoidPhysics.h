@@ -6,6 +6,8 @@ struct World {
 	vector<void*> balls;
 	vector<void*> powerups;
 	void* vaus;
+
+	int* life;
 };
 
 class IArkanoidPhysics {
